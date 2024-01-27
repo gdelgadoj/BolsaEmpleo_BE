@@ -71,21 +71,19 @@ namespace BolsaEmpleo_BE.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateCitizen([FromBody] CitizenDTO citizenDTO)
+        public async Task<IActionResult> UpdateCitizen([FromBody] Citizen citizen)
         {
-            var citizenFromDB = await _context.Citizens.FindAsync(citizenDTO.Document_Number);
+            var citizenFromDB = await _context.Citizens.FindAsync(citizen.ID);
             if (citizenFromDB is null) return BadRequest("Ciudadano no encontrado");
             try
             {
-                citizenFromDB.Document_Number = citizenDTO.Document_Number;
-                citizenFromDB.Document_Type_Id = citizenDTO.Document_Type_Id;
-                citizenFromDB.Name = citizenDTO.Name;
-                citizenFromDB.Surname = citizenDTO.Surname;
-                citizenFromDB.Second_Surname = citizenDTO.Second_Surname;
-                citizenFromDB.Birth_Date = citizenDTO.Birth_Date;
-                citizenFromDB.Profession = citizenDTO.Profession;
-                citizenFromDB.Salary_Expectation = citizenDTO.Salary_Expectation;
-                citizenFromDB.Email = citizenDTO.Email;
+                citizenFromDB.Name = citizen.Name;
+                citizenFromDB.Surname = citizen.Surname;
+                citizenFromDB.Second_Surname = citizen.Second_Surname;
+                citizenFromDB.Birth_Date = citizen.Birth_Date;
+                citizenFromDB.Profession = citizen.Profession;
+                citizenFromDB.Salary_Expectation = citizen.Salary_Expectation;
+                citizenFromDB.Email = citizen.Email;
                 await _context.SaveChangesAsync();
             }
             catch (DbException e)
